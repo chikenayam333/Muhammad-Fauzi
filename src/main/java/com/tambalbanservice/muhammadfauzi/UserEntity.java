@@ -7,7 +7,7 @@ package com.tambalbanservice.muhammadfauzi;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "login")
+@Table(name = "pengguna")
 public class UserEntity {
 
     @Id

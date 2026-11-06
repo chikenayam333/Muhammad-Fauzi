@@ -12,6 +12,10 @@ import java.sql.ResultSet;
  */
 public class login extends javax.swing.JFrame {
 
+    private javax.swing.JTextField txtUsername;
+   private javax.swing.JTextField txtPass;
+   
+
     /**
      * Creates new form login
      */
@@ -107,9 +111,8 @@ public class login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-String username = txtUsername.getText().trim();
-String password = txtPassword.getText().trim();
+    String username = txtUsername.getText().trim();
+    String password = txtPassword.getText().trim(); 
 
 if (username.isEmpty() || password.isEmpty()) {
     javax.swing.JOptionPane.showMessageDialog(
@@ -118,7 +121,18 @@ if (username.isEmpty() || password.isEmpty()) {
     return;
 }
 
-String url = "jdbc:mysql://localhost:3306/login";
+try (org.hibernate.Session session = com.tambalbanservice.muhammadfauzi.HibernateUtil.getSessionFactory() {
+    String hql = "FROM UserEntity WHERE username = :uname AND password = :pass";
+    org.hibernate.query.Query<com.tambalbanservice.muhammadfauzi.UserEntity> quert = session.createQuery(hql, com.tambalbanservice.muhammadfauzi.UserEntity.class);
+    query.setParameter("uname", username);
+    query.setParameter("pass",password);
+    
+    com.tambalbanservice.muhammadfauzi.UserEntity user = query.uniqueResult();
+    
+    if (user != null) {
+        javax
+    }
+}
 
 try (
     java.sql.Connection conn =
@@ -149,6 +163,13 @@ try (
         this, "Koneksi database gagal: " + e.getMessage()
     );
 }
+                                       
+        
+
+        
+                
+               
+
 
 
 // TODO add your handling code here:
