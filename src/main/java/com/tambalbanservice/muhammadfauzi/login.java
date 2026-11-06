@@ -12,8 +12,7 @@ import java.sql.ResultSet;
  */
 public class login extends javax.swing.JFrame {
 
-    private javax.swing.JTextField txtUsername;
-   private javax.swing.JTextField txtPass;
+
    
 
     /**
@@ -121,48 +120,45 @@ if (username.isEmpty() || password.isEmpty()) {
     return;
 }
 
-try (org.hibernate.Session session = com.tambalbanservice.muhammadfauzi.HibernateUtil.getSessionFactory() {
-    String hql = "FROM UserEntity WHERE username = :uname AND password = :pass";
-    org.hibernate.query.Query<com.tambalbanservice.muhammadfauzi.UserEntity> quert = session.createQuery(hql, com.tambalbanservice.muhammadfauzi.UserEntity.class);
-    query.setParameter("uname", username);
-    query.setParameter("pass",password);
-    
-    com.tambalbanservice.muhammadfauzi.UserEntity user = query.uniqueResult();
-    
-    if (user != null) {
-        javax
-    }
-}
 
-try (
-    java.sql.Connection conn =
-        java.sql.DriverManager.getConnection(url, "root", "");
 
-    java.sql.PreparedStatement ps = conn.prepareStatement(
-        "SELECT * FROM pengguna WHERE username = ? AND password = ?"
-    )
-) 
-{
-    ps.setString(1, username);
-    ps.setString(2, password);
+    try (org.hibernate.Session session = com.tambalbanservice.muhammadfauzi.HibernateUtil.getSessionFactory().openSession()) {
+            
+            // Query menggunakan HQL (Hibernate Query Language) memetakan ke UserEntity
+            String hql = "FROM UserEntity WHERE username = :uname AND password = :pass";
+            org.hibernate.query.Query<com.tambalbanservice.muhammadfauzi.UserEntity> query = session.createQuery(hql, com.tambalbanservice.muhammadfauzi.UserEntity.class);
+            query.setParameter("uname", username);
+            query.setParameter("pass", password);
+            
+            com.tambalbanservice.muhammadfauzi.UserEntity user = query.uniqueResult();
+            
+            if (user != null) {
+                javax.swing.JOptionPane.showMessageDialog(
+                    this, "Login berhasil! Selamat datang, " + username
+                );
+                
+                // Tutup form login
+                this.dispose();
+                
+                // Buka form utama aplikasi stiker Anda di sini (misalnya: new MainForm().setVisible(true);)
+                
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(
+                    this, "Username atau password salah!"
+                );
+            } 
+            
+            
 
-    try (ResultSet rs = ps.executeQuery()) {
-        if (rs.next()) {
+
+
+} catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(
-                this, "Login berhasil! Selamat datang, " + username
+                this, "Koneksi database atau Hibernate gagal: " + e.getMessage()
             );
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(
-                this, "Username atau password salah!"
-            );
+            e.printStackTrace();
         }
-    }
-
-} catch (java.sql.SQLException e) {
-    javax.swing.JOptionPane.showMessageDialog(
-        this, "Koneksi database gagal: " + e.getMessage()
-    );
-}
+    
                                        
         
 

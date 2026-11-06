@@ -13,16 +13,9 @@ import com.tambalbanservice.muhammadfauzi.login;
 public class Main {
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(() -> {
-            javax.swing.JFrame frame = new javax.swing.JFrame("Login");
-            
-            frame.setDefaultCloseOperation(
-                javax.swing.JFrame.EXIT_ON_CLOSE
-            );
-
-            frame.setContentPane(new login());
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
+            login form = new login();
+            form.setLocationRelativeTo(null);
+            form.setVisible(true);
         });
     }
 }
