@@ -10,11 +10,17 @@ package com.tambalbanservice.muhammadfauzi;
  */
 public class signup extends javax.swing.JFrame {
 
+    private UserDao dao;
+    
+    
     /**
      * Creates new form signup
      */
     public signup() {
         initComponents();
+        UserDaoImpl impl = new UserDaoImpl();
+        impl.setSessionFactory(HibernateUtil.getSessionFactory());
+        dao = impl;
     }
 
     /**
@@ -124,43 +130,29 @@ public class signup extends javax.swing.JFrame {
         return;
     }
 
-    org.hibernate.Transaction tx = null;
-    try (org.hibernate.Session session = HibernateUtil.getSessionFactory().openSession()) {
-
-        Long jumlah = session.createQuery(
-                "SELECT COUNT(u) FROM UserEntity u WHERE u.username = :uname", Long.class)
-                .setParameter("uname", username)
-                .uniqueResult();
-
-        if (jumlah > 0) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Username sudah terdaftar!");
+    try {
+        
+        if (dao.cekUsername(username)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Username sudah Terdaftar");
             return;
         }
-
-        tx = session.beginTransaction();
-
+        
         UserEntity user = new UserEntity();
         user.setUsername(username);
         user.setPassword(password);
-        session.persist(user);
-
-        tx.commit();
-
-        javax.swing.JOptionPane.showMessageDialog(this, "Registrasi berhasil! Silakan login.");
+        user.setRole("user");
+        dao.simpan(user);
+        
+        javax.swing.JOptionPane.showMessageDialog(this, "Registrasi Berhasil Silahkan Login");
         this.dispose();
         login form = new login();
         form.setLocationRelativeTo(null);
         form.setVisible(true);
-
     } catch (Exception e) {
-        if (tx != null) tx.rollback();
-        javax.swing.JOptionPane.showMessageDialog(this, "Registrasi gagal: " + e.getMessage());
-        e.printStackTrace();
+        javax.swing.JOptionPane.showConfirmDialog(this, "Registrasi Gagal" + e.getMessage());
     }
-
-
-
-        // TODO add your handling code here:
+    
+      // TODO add your handling code here:
     }//GEN-LAST:event_btnDaftarActionPerformed
 
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
