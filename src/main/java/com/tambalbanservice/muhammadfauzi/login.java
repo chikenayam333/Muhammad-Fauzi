@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 public class login extends javax.swing.JFrame {
 
 
+    private UserDao dao;
    
 
     /**
@@ -20,6 +21,9 @@ public class login extends javax.swing.JFrame {
      */
     public login() {
         initComponents();
+        UserDaoImpl impl = new UserDaoImpl();
+        impl.setSessionFactory(HibernateUtil.getSessionFactory());
+        dao = impl;
     }
 
     /**
@@ -133,60 +137,19 @@ public class login extends javax.swing.JFrame {
     String username = txtUsername.getText().trim();
     String password = txtPassword.getText().trim(); 
 
-if (username.isEmpty() || password.isEmpty()) {
-    javax.swing.JOptionPane.showMessageDialog(
-        this, "Username dan password wajib diisi!"
-    );
-    return;
-}
-
-
-
-    try (org.hibernate.Session session = com.tambalbanservice.muhammadfauzi.HibernateUtil.getSessionFactory().openSession()) {
-            
-            // Query menggunakan HQL (Hibernate Query Language) memetakan ke UserEntity
-            String hql = "FROM UserEntity WHERE username = :uname AND password = :pass";
-            org.hibernate.query.Query<com.tambalbanservice.muhammadfauzi.UserEntity> query = session.createQuery(hql, com.tambalbanservice.muhammadfauzi.UserEntity.class);
-            query.setParameter("uname", username);
-            query.setParameter("pass", password);
-            
-            com.tambalbanservice.muhammadfauzi.UserEntity user = query.uniqueResult();
-            
-            if (user != null) {
-                javax.swing.JOptionPane.showMessageDialog(
-                    this, "Login berhasil! Selamat datang, " + username
-                );
-                
-                // Tutup form login
-                this.dispose();
-                
-                // Buka form utama aplikasi stiker Anda di sini (misalnya: new MainForm().setVisible(true);)
-                
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(
-                    this, "Username atau password salah!"
-                );
-            } 
-            
-            
-
-
-
-} catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(
-                this, "Koneksi database atau Hibernate gagal: " + e.getMessage()
-            );
-            e.printStackTrace();
-        }
+    UserEntity user = dao.login(username, password);
     
-                                       
-        
-
-        
-                
-               
-
-
+    if(user != null) {
+        javax.swing.JOptionPane.showConfirmDialog(this, "Username atau Password Salah");
+        return;
+    }
+    
+    this.dispose();
+    if (user.getRole().equals("admin")) {
+        new MenuAdmin().setVisible(true);
+    } else {
+        new MenuUser().setVisible(true);
+    }
 
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
