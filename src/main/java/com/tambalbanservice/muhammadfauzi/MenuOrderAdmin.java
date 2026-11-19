@@ -13,23 +13,18 @@ public class MenuOrderAdmin extends javax.swing.JFrame {
 private OrderDao orderDao;
 private StikerDao stikerDao;
 
-public MenuOrderAdmin() {
-    initComponents();
-    setLocationRelativeTo(null);
+    public MenuOrderAdmin() {
+        initComponents();
+        setLocationRelativeTo(null);
 
-    OrderDaoImpl oImpl = new OrderDaoImpl();
-    oImpl.setSessionFactory(HibernateUtil.getSessionFactory());
-    orderDao = oImpl;
+        orderDao = SpringContext.getBean(OrderDao.class);
+        stikerDao = SpringContext.getBean(StikerDao.class);
 
-    StikerDaoImpl sImpl = new StikerDaoImpl();
-    sImpl.setSessionFactory(HibernateUtil.getSessionFactory());
-    stikerDao = sImpl;
+        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(
+                new String[]{"Menunggu", "Diproses", "Selesai", "Ditolak"}));
 
-    cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(
-            new String[]{"Menunggu", "Diproses", "Selesai", "Ditolak"}));
-
-    loadTabelOrder();
-}
+        loadTabelOrder();
+    }
 
 private void loadTabelOrder() {
     javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(

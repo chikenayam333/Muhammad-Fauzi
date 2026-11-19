@@ -1,3 +1,4 @@
+com\tambalbanservice\muhammadfauzi\AppConfig.class
 com\tambalbanservice\muhammadfauzi\MenuOrderAdmin$5.class
 com\tambalbanservice\muhammadfauzi\signup$4.class
 com\tambalbanservice\muhammadfauzi\MenuUser$7.class
@@ -21,6 +22,7 @@ com\tambalbanservice\muhammadfauzi\MenuAdmin$4.class
 com\tambalbanservice\muhammadfauzi\UserEntity.class
 com\tambalbanservice\muhammadfauzi\MenuOrderAdmin$2.class
 com\tambalbanservice\muhammadfauzi\login$5.class
+com\tambalbanservice\muhammadfauzi\SpringContext.class
 com\tambalbanservice\muhammadfauzi\MenuUser$5.class
 com\tambalbanservice\muhammadfauzi\signup$3.class
 com\tambalbanservice\muhammadfauzi\MenuAdmin$1.class
@@ -35,7 +37,6 @@ com\tambalbanservice\muhammadfauzi\HibernateUtil.class
 com\tambalbanservice\muhammadfauzi\UserDao.class
 com\tambalbanservice\muhammadfauzi\signup$2.class
 com\tambalbanservice\muhammadfauzi\StikerDaoImpl.class
-.netbeans_automatic_build
 com\tambalbanservice\muhammadfauzi\MenuAdmin$2.class
 com\tambalbanservice\muhammadfauzi\MenuOrderAdmin$4.class
 com\tambalbanservice\muhammadfauzi\MenuAdmin$9.class

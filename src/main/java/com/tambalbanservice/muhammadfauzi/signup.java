@@ -16,11 +16,9 @@ public class signup extends javax.swing.JFrame {
     /**
      * Creates new form signup
      */
-    public signup() {
+        public signup() {
         initComponents();
-        UserDaoImpl impl = new UserDaoImpl();
-        impl.setSessionFactory(HibernateUtil.getSessionFactory());
-        dao = impl;
+        dao = SpringContext.getBean(UserDao.class);
     }
 
     /**

@@ -15,18 +15,14 @@ public class MenuAdmin extends javax.swing.JFrame {
      */
     private StikerDao stikerDao;
 
-public MenuAdmin() {
-    initComponents();
-    setLocationRelativeTo(null);
+    public MenuAdmin() {
+        initComponents();
+        setLocationRelativeTo(null);
 
-    btnBersihkan.addActionListener(e -> bersihkanForm());
+        stikerDao = SpringContext.getBean(StikerDao.class);
 
-    StikerDaoImpl impl = new StikerDaoImpl();
-    impl.setSessionFactory(HibernateUtil.getSessionFactory());
-    stikerDao = impl;
-
-    loadTabelStiker();
-}
+        loadTabelStiker();
+    }
 
 private void loadTabelStiker() {
     javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(

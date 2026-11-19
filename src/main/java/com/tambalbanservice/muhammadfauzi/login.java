@@ -19,11 +19,9 @@ public class login extends javax.swing.JFrame {
     /**
      * Creates new form login
      */
-    public login() {
+        public login() {
         initComponents();
-        UserDaoImpl impl = new UserDaoImpl();
-        impl.setSessionFactory(HibernateUtil.getSessionFactory());
-        dao = impl;
+        dao = SpringContext.getBean(UserDao.class);
     }
 
     /**

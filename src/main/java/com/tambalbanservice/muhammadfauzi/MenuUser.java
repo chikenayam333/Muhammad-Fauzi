@@ -22,22 +22,17 @@ public MenuUser() {
     this(null);
 }
 
-public MenuUser(UserEntity user) {
-    initComponents();
-    setLocationRelativeTo(null);
-    this.userLogin = user;
+    public MenuUser(UserEntity user) {
+        initComponents();
+        setLocationRelativeTo(null);
+        this.userLogin = user;
 
-    StikerDaoImpl sImpl = new StikerDaoImpl();
-    sImpl.setSessionFactory(HibernateUtil.getSessionFactory());
-    stikerDao = sImpl;
+        stikerDao = SpringContext.getBean(StikerDao.class);
+        orderDao = SpringContext.getBean(OrderDao.class);
 
-    OrderDaoImpl oImpl = new OrderDaoImpl();
-    oImpl.setSessionFactory(HibernateUtil.getSessionFactory());
-    orderDao = oImpl;
-
-    loadTabelStok();
-    loadTabelOrder();
-}
+        loadTabelStok();
+        loadTabelOrder();
+    }
 
 private void loadTabelStok() {
     javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
