@@ -137,18 +137,26 @@ public class login extends javax.swing.JFrame {
     String username = txtUsername.getText().trim();
     String password = txtPassword.getText().trim(); 
 
-    UserEntity user = dao.login(username, password);
-    
-    if(user != null) {
-        javax.swing.JOptionPane.showConfirmDialog(this, "Username atau Password Salah");
+if (username.isEmpty() || password.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Username dan password wajib diisi");
         return;
     }
-    
+
+    UserEntity user = dao.login(username, password);
+
+    if (user == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Username atau Password Salah",
+                "Login Gagal", javax.swing.JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
     this.dispose();
-    if (user.getRole().equals("admin")) {
+    if ("admin".equalsIgnoreCase(user.getRole())) {
         new MenuAdmin().setVisible(true);
     } else {
-        new MenuUser().setVisible(true);
+        MenuUser mu = new MenuUser(user);
+        mu.setLocationRelativeTo(null);
+        mu.setVisible(true);
     }
 
 // TODO add your handling code here:

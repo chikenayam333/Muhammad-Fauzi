@@ -13,9 +13,67 @@ public class MenuUser extends javax.swing.JFrame {
     /**
      * Creates new form MenuUser
      */
-    public MenuUser() {
-        initComponents();
+private StikerDao stikerDao;
+private OrderDao orderDao;
+private UserEntity userLogin;
+private java.io.File fileDesain;
+
+public MenuUser() {
+    this(null);
+}
+
+public MenuUser(UserEntity user) {
+    initComponents();
+    setLocationRelativeTo(null);
+    this.userLogin = user;
+
+    StikerDaoImpl sImpl = new StikerDaoImpl();
+    sImpl.setSessionFactory(HibernateUtil.getSessionFactory());
+    stikerDao = sImpl;
+
+    OrderDaoImpl oImpl = new OrderDaoImpl();
+    oImpl.setSessionFactory(HibernateUtil.getSessionFactory());
+    orderDao = oImpl;
+
+    loadTabelStok();
+    loadTabelOrder();
+}
+
+private void loadTabelStok() {
+    javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
+            new Object[]{"ID", "Jenis", "Warna", "Ukuran", "Harga", "Stok"}, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+    for (StikerEntity s : stikerDao.semua()) {
+        model.addRow(new Object[]{s.getId(), s.getJenis(), s.getWarna(),
+                s.getUkuran(), s.getHarga(), s.getStok()});
     }
+    tblStok.setModel(model);
+}
+
+private void loadTabelOrder() {
+    javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
+            new Object[]{"ID", "Jenis", "Warna", "Ukuran", "Jumlah", "Total", "Status", "Estimasi"}, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+    if (userLogin != null) {
+        for (OrderEntity o : orderDao.cariByUser(userLogin.getId())) {
+            String estimasi = (o.getEstimasiHari() == null)
+                    ? "Belum ditentukan" : o.getEstimasiHari() + " hari";
+            model.addRow(new Object[]{o.getId(), o.getStiker().getJenis(),
+                    o.getStiker().getWarna(), o.getStiker().getUkuran(),
+                    o.getJumlah(), o.getTotalHarga(), o.getStatus(), estimasi});
+        }
+    }
+    tblOrder.setModel(model);
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,12 +84,23 @@ public class MenuUser extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         Logout = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblStok = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtJumlah = new javax.swing.JTextField();
+        btnPilihGambar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        lblNamaFile = new javax.swing.JLabel();
+        btnPesan = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblOrder = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("Selamat Datang User");
 
         Logout.setText("Logout");
         Logout.addActionListener(new java.awt.event.ActionListener() {
@@ -40,6 +109,65 @@ public class MenuUser extends javax.swing.JFrame {
             }
         });
 
+        tblStok.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblStok);
+
+        jLabel2.setText("MENU USER");
+
+        jLabel3.setText("Daftar Stiker ( Stok dan Harga )");
+
+        jLabel4.setText("Jumlah");
+
+        txtJumlah.setColumns(8);
+        txtJumlah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtJumlahActionPerformed(evt);
+            }
+        });
+
+        btnPilihGambar.setText("Pilih Gambar");
+        btnPilihGambar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPilihGambarActionPerformed(evt);
+            }
+        });
+
+        lblNamaFile.setText("nama_file.png");
+
+        btnPesan.setText("Pesan");
+        btnPesan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesanActionPerformed(evt);
+            }
+        });
+
+        tblOrder.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblOrder);
+
+        jLabel5.setText("Daftar Stiker ( Stok dan Harga )");
+
+        jLabel6.setText("Riwayat Order");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -47,21 +175,70 @@ public class MenuUser extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(218, 218, 218)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(Logout)))
-                .addContainerGap(343, Short.MAX_VALUE))
+                        .addComponent(Logout))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(357, 357, 357)
+                        .addComponent(jLabel2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnPilihGambar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblNamaFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPesan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtJumlah))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(640, 640, 640))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(292, 292, 292)
+                .addComponent(jLabel5)
+                .addGap(242, 242, 242)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(115, 115, 115))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPilihGambar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1)
+                        .addGap(8, 8, 8)
+                        .addComponent(lblNamaFile)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPesan)
+                        .addGap(105, 105, 105))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                .addGap(28, 28, 28)
                 .addComponent(Logout)
-                .addGap(40, 40, 40))
+                .addContainerGap())
         );
 
         pack();
@@ -75,6 +252,97 @@ public class MenuUser extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_LogoutActionPerformed
+
+    private void txtJumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtJumlahActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtJumlahActionPerformed
+
+    private void btnPilihGambarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPilihGambarActionPerformed
+    javax.swing.JFileChooser chooser = new javax.swing.JFileChooser();
+    chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
+            "Gambar (png, jpg, jpeg)", "png", "jpg", "jpeg"));
+    if (chooser.showOpenDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
+        fileDesain = chooser.getSelectedFile();
+        lblNamaFile.setText(fileDesain.getName());
+    }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPilihGambarActionPerformed
+
+    private void btnPesanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesanActionPerformed
+    int baris = tblStok.getSelectedRow();
+    if (baris < 0) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Pilih stiker di tabel dulu");
+        return;
+    }
+    if (userLogin == null) {
+        javax.swing.JOptionPane.showMessageDialog(this, "User tidak dikenali, silakan login ulang");
+        return;
+    }
+
+    int jumlah;
+    try {
+        jumlah = Integer.parseInt(txtJumlah.getText().trim());
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Jumlah harus berupa angka");
+        return;
+    }
+    if (jumlah <= 0) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Jumlah harus lebih dari 0");
+        return;
+    }
+
+    StikerEntity stiker = stikerDao.cariById((int) tblStok.getValueAt(baris, 0));
+    if (jumlah > stiker.getStok()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Stok tidak cukup. Sisa stok: " + stiker.getStok());
+        return;
+    }
+
+    double total = stiker.getHarga() * jumlah;
+    int yakin = javax.swing.JOptionPane.showConfirmDialog(this,
+            "Total harga: Rp " + String.format("%,.0f", total) + "\nLanjutkan pesanan?",
+            "Konfirmasi", javax.swing.JOptionPane.YES_NO_OPTION);
+    if (yakin != javax.swing.JOptionPane.YES_OPTION) {
+        return;
+    }
+
+    try {
+        String gambarPath = null;
+        if (fileDesain != null) {
+            java.nio.file.Path folder = java.nio.file.Paths.get("uploads");
+            java.nio.file.Files.createDirectories(folder);
+            String namaBaru = System.currentTimeMillis() + "_" + fileDesain.getName();
+            java.nio.file.Path tujuan = folder.resolve(namaBaru);
+            java.nio.file.Files.copy(fileDesain.toPath(), tujuan,
+                    java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            gambarPath = tujuan.toString();
+        }
+
+        OrderEntity o = new OrderEntity();
+        o.setUser(userLogin);
+        o.setStiker(stiker);
+        o.setJumlah(jumlah);
+        o.setTotalHarga(total);
+        o.setGambarPath(gambarPath);
+        o.setStatus("Menunggu");
+        o.setTanggalOrder(java.time.LocalDateTime.now());
+        orderDao.simpan(o);
+
+        stiker.setStok(stiker.getStok() - jumlah);
+        stikerDao.ubah(stiker);
+
+        txtJumlah.setText("");
+        fileDesain = null;
+        lblNamaFile.setText("");
+        loadTabelStok();
+        loadTabelOrder();
+        javax.swing.JOptionPane.showMessageDialog(this, "Pesanan berhasil dibuat");
+    } catch (java.io.IOException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan gambar: " + e.getMessage());
+    }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPesanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -113,6 +381,19 @@ public class MenuUser extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Logout;
+    private javax.swing.JButton btnPesan;
+    private javax.swing.JButton btnPilihGambar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblNamaFile;
+    private javax.swing.JTable tblOrder;
+    private javax.swing.JTable tblStok;
+    private javax.swing.JTextField txtJumlah;
     // End of variables declaration//GEN-END:variables
 }
