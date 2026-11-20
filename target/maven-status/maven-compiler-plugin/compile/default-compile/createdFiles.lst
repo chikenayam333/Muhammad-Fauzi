@@ -1,6 +1,7 @@
 com\tambalbanservice\muhammadfauzi\AppConfig.class
 com\tambalbanservice\muhammadfauzi\MenuOrderAdmin$5.class
 com\tambalbanservice\muhammadfauzi\signup$4.class
+com\tambalbanservice\muhammadfauzi\MenuAdmin$11.class
 com\tambalbanservice\muhammadfauzi\MenuUser$7.class
 com\tambalbanservice\muhammadfauzi\StikerEntity.class
 com\tambalbanservice\muhammadfauzi\login$1.class
@@ -38,6 +39,7 @@ com\tambalbanservice\muhammadfauzi\UserDao.class
 com\tambalbanservice\muhammadfauzi\signup$2.class
 com\tambalbanservice\muhammadfauzi\StikerDaoImpl.class
 com\tambalbanservice\muhammadfauzi\MenuAdmin$2.class
+com\tambalbanservice\muhammadfauzi\MenuAdmin$10.class
 com\tambalbanservice\muhammadfauzi\MenuOrderAdmin$4.class
 com\tambalbanservice\muhammadfauzi\MenuAdmin$9.class
 com\tambalbanservice\muhammadfauzi\MenuUser$6.class

@@ -14,12 +14,14 @@ public class MenuAdmin extends javax.swing.JFrame {
      * Creates new form MenuAdmin
      */
     private StikerDao stikerDao;
+    private OrderDao orderDao;
 
     public MenuAdmin() {
         initComponents();
         setLocationRelativeTo(null);
 
         stikerDao = SpringContext.getBean(StikerDao.class);
+        orderDao = SpringContext.getBean(OrderDao.class);
 
         loadTabelStiker();
     }
@@ -33,8 +35,8 @@ private void loadTabelStiker() {
         }
     };
     for (StikerEntity s : stikerDao.semua()) {
-        model.addRow(new Object[]{s.getId(), s.getJenis(), s.getWarna(),
-                s.getUkuran(), s.getHarga(), s.getStok()});
+            model.addRow(new Object[]{s.getId(), s.getJenis(), s.getWarna(),
+                s.getUkuran() + " meter", s.getHarga(), s.getStok()});
     }
     tblStiker.setModel(model);
 }
@@ -79,6 +81,7 @@ private void bersihkanForm() {
         tblStiker = new javax.swing.JTable();
         btnBersihkan = new javax.swing.JButton();
         btnDaftarOrder = new javax.swing.JButton();
+        btnLaporan = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -115,8 +118,13 @@ private void bersihkanForm() {
         txtWarna.setColumns(12);
 
         txtUkuran.setColumns(12);
+        txtUkuran.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUkuranKeyTyped(evt);
+            }
+        });
 
-        jLabel6.setText("Harga");
+        jLabel6.setText("Harga per meter");
 
         jLabel7.setText("Stok");
 
@@ -185,7 +193,13 @@ private void bersihkanForm() {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnTambah)
+                                .addGap(33, 33, 33)
+                                .addComponent(btnUbah)
+                                .addGap(35, 35, 35)
+                                .addComponent(btnHapus))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -198,29 +212,25 @@ private void bersihkanForm() {
                                         .addComponent(txtWarna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(61, 61, 61)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)))
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel6)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtUkuran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(btnTambah)
-                                        .addGap(33, 33, 33)
-                                        .addComponent(btnUbah)))
-                                .addGap(18, 18, 18)
-                                .addComponent(btnHapus)))
-                        .addGap(42, 42, 42)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtUkuran, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBersihkan)
-                            .addComponent(txtStok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(btnBersihkan))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtStok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtHarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(160, 160, 160)
                         .addComponent(btnDaftarOrder)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44))
         );
@@ -259,13 +269,23 @@ private void bersihkanForm() {
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
+        btnLaporan.setText("Cetak Laporan");
+        btnLaporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLaporanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Logout)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Logout)
+                        .addGap(40, 40, 40)
+                        .addComponent(btnLaporan))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(328, 328, 328)
                         .addComponent(jLabel1))
@@ -287,7 +307,9 @@ private void bersihkanForm() {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Logout)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Logout)
+                    .addComponent(btnLaporan))
                 .addContainerGap())
         );
 
@@ -308,14 +330,14 @@ private void bersihkanForm() {
         StikerEntity s = new StikerEntity();
         s.setJenis(txtJenis.getText().trim());
         s.setWarna(txtWarna.getText().trim());
-        s.setUkuran(txtUkuran.getText().trim());
+        s.setUkuran(Integer.parseInt(txtUkuran.getText().trim()));
         s.setHarga(Double.parseDouble(txtHarga.getText().trim()));
         s.setStok(Integer.parseInt(txtStok.getText().trim()));
         stikerDao.simpan(s);
         loadTabelStiker();
         bersihkanForm();
     } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Harga dan stok harus berupa angka");
+        javax.swing.JOptionPane.showMessageDialog(this, "Ukuran, harga, dan stok harus berupa angka");
     }
 
         // TODO add your handling code here:
@@ -332,14 +354,14 @@ private void bersihkanForm() {
         StikerEntity s = stikerDao.cariById(id);
         s.setJenis(txtJenis.getText().trim());
         s.setWarna(txtWarna.getText().trim());
-        s.setUkuran(txtUkuran.getText().trim());
+        s.setUkuran(Integer.parseInt(txtUkuran.getText().trim()));
         s.setHarga(Double.parseDouble(txtHarga.getText().trim()));
         s.setStok(Integer.parseInt(txtStok.getText().trim()));
         stikerDao.ubah(s);
         loadTabelStiker();
         bersihkanForm();
     } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Harga dan stok harus berupa angka");
+        javax.swing.JOptionPane.showMessageDialog(this, "Ukuran, harga, dan stok harus berupa angka");
     }
 
         // TODO add your handling code here:
@@ -373,7 +395,7 @@ private void bersihkanForm() {
         if (baris < 0) return;
         txtJenis.setText(tblStiker.getValueAt(baris, 1).toString());
         txtWarna.setText(tblStiker.getValueAt(baris, 2).toString());
-        txtUkuran.setText(tblStiker.getValueAt(baris, 3).toString());
+        txtUkuran.setText(tblStiker.getValueAt(baris, 3).toString().replace(" meter", ""));
         txtHarga.setText(tblStiker.getValueAt(baris, 4).toString());
         txtStok.setText(tblStiker.getValueAt(baris, 5).toString());
 
@@ -388,6 +410,50 @@ private void bersihkanForm() {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDaftarOrderActionPerformed
+
+    private void btnLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporanActionPerformed
+         try {
+            java.io.InputStream desain = getClass().getResourceAsStream("/laporan_penjualan.jrxml");
+            if (desain == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "File laporan_penjualan.jrxml tidak ditemukan");
+                return;
+            }
+
+            net.sf.jasperreports.engine.JasperReport laporan =
+                    net.sf.jasperreports.engine.JasperCompileManager.compileReport(desain);
+
+            net.sf.jasperreports.engine.data.JRBeanCollectionDataSource data =
+                    new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(orderDao.semua());
+
+            net.sf.jasperreports.engine.JasperPrint hasil =
+                    net.sf.jasperreports.engine.JasperFillManager.fillReport(
+                            laporan, new java.util.HashMap<String, Object>(), data);
+
+            net.sf.jasperreports.swing.JRViewer viewer = new net.sf.jasperreports.swing.JRViewer(hasil);
+            javax.swing.JFrame jendela = new javax.swing.JFrame("Laporan Penjualan");
+            jendela.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            jendela.getContentPane().add(viewer);
+            jendela.setSize(900, 600);
+            jendela.setLocationRelativeTo(null);
+            jendela.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal membuat laporan: " + e.getMessage());
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLaporanActionPerformed
+
+    private void txtUkuranKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUkuranKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)
+                && c != java.awt.event.KeyEvent.VK_BACK_SPACE
+                && c != java.awt.event.KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUkuranKeyTyped
 
     /**
      * @param args the command line arguments
@@ -429,6 +495,7 @@ private void bersihkanForm() {
     private javax.swing.JButton btnBersihkan;
     private javax.swing.JButton btnDaftarOrder;
     private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnLaporan;
     private javax.swing.JButton btnTambah;
     private javax.swing.JButton btnUbah;
     private javax.swing.JLabel jLabel1;

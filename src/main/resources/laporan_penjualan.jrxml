@@ -1,0 +1,103 @@
+
+<!-- Created with Jaspersoft Studio version 7.0.8.final using JasperReports Library version 7.0.8-6f896111  -->
+<jasperReport name="Muhammad Fauzi" language="java" columnCount="1" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d7e2fffb-eb48-4253-8101-b45ef3c31add">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<query language="sql"><![CDATA[]]></query>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="user.username" class="java.lang.String"/>
+	<field name="stiker.jenis" class="java.lang.String"/>
+	<field name="stiker.warna" class="java.lang.String"/>
+	<field name="stiker.ukuran" class="java.lang.String"/>
+	<field name="jumlah" class="java.lang.Integer"/>
+	<field name="totalHarga" class="java.lang.Double"/>
+	<field name="status" class="java.lang.String"/>
+	<background splitType="Stretch"/>
+	<title height="55" splitType="Stretch">
+		<element kind="staticText" uuid="0a846e84-157d-4b18-bd6c-bf411082c52b" x="340" y="12" width="132" height="30">
+			<text><![CDATA[LAPORAN PENJUALAN]]></text>
+		</element>
+	</title>
+	<pageHeader height="35" splitType="Stretch"/>
+	<columnHeader height="61" splitType="Stretch">
+		<element kind="staticText" uuid="c5ec62fe-6747-48dd-8936-110e69061691" x="-10" y="0" width="78" height="30">
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a0a36150-c758-4d79-a487-d67796a8559a"/>
+			<text><![CDATA[id]]></text>
+		</element>
+		<element kind="staticText" uuid="2449b90e-6524-460a-b65f-c89a21b60916" x="90" y="0" width="90" height="30">
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="44ae3fb9-e4a9-4e41-9b46-f4a65657ebec"/>
+			<text><![CDATA[user.username]]></text>
+		</element>
+		<element kind="staticText" uuid="8388470c-c4c2-41aa-90cd-25820ffb3059" x="200" y="0" width="74" height="30">
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="077949f9-1be2-4ccd-997f-ff3caf6aa318"/>
+			<text><![CDATA[stiker.jenis]]></text>
+		</element>
+		<element kind="staticText" uuid="6581f41a-469c-47ad-bc53-3a2ded0f089b" x="290" y="0" width="80" height="30">
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="35ce24a6-0172-4f63-b57a-a2a4b11c152d"/>
+			<text><![CDATA[stiker.warna]]></text>
+		</element>
+		<element kind="staticText" uuid="a37b9b9c-3035-46e5-995a-2d15f55a0111" x="390" y="0" width="80" height="30">
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a13d6ec1-e366-4e97-875a-1e031b16e209"/>
+			<text><![CDATA[stiker.ukuran]]></text>
+		</element>
+		<element kind="staticText" uuid="caa3ee29-3899-4f39-bc80-4d02ce31483f" x="500" y="0" width="60" height="30">
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="64359f51-e229-441b-8783-21be91b243d7"/>
+			<text><![CDATA[jumlah]]></text>
+		</element>
+		<element kind="staticText" uuid="01e9dd3a-c457-46e9-977e-59e7452d23b0" x="590" y="0" width="80" height="30">
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8a62d261-0f5a-4033-a8e9-305479a75086"/>
+			<text><![CDATA[totalHarga]]></text>
+		</element>
+		<element kind="staticText" uuid="d63c23c1-0563-4593-b523-8be7a50b156f" x="700" y="0" width="100" height="30">
+			<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f73e136d-0ba7-4e4e-840e-023390a3c918"/>
+			<text><![CDATA[status]]></text>
+		</element>
+	</columnHeader>
+	<detail>
+		<band height="61" splitType="Stretch">
+			<element kind="textField" uuid="49e1972c-7cce-40b5-8017-05bafd8dabab" x="-11" y="10" width="80" height="30">
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a0a36150-c758-4d79-a487-d67796a8559a"/>
+				<expression><![CDATA[$F{id}]]></expression>
+			</element>
+			<element kind="textField" uuid="eb1be05a-fc1d-425f-8784-bb079ef05b9d" x="90" y="10" width="90" height="30">
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="44ae3fb9-e4a9-4e41-9b46-f4a65657ebec"/>
+				<expression><![CDATA[$F{user.username}]]></expression>
+			</element>
+			<element kind="textField" uuid="58d83dfa-2634-452e-a844-d320154ae454" x="204" y="10" width="70" height="30">
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="077949f9-1be2-4ccd-997f-ff3caf6aa318"/>
+				<expression><![CDATA[$F{stiker.jenis}]]></expression>
+			</element>
+			<element kind="textField" uuid="eb6f6d65-a390-4348-9bc9-c78fef0762a9" x="290" y="10" width="81" height="30">
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="35ce24a6-0172-4f63-b57a-a2a4b11c152d"/>
+				<expression><![CDATA[$F{stiker.warna}]]></expression>
+			</element>
+			<element kind="textField" uuid="325cfb23-bc48-4663-9b52-f91268626e18" x="390" y="10" width="80" height="30">
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a13d6ec1-e366-4e97-875a-1e031b16e209"/>
+				<expression><![CDATA[$F{stiker.ukuran}]]></expression>
+			</element>
+			<element kind="textField" uuid="53ba4fec-ad69-4494-b306-d0008f142b91" x="500" y="10" width="60" height="30">
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="32471d03-0b53-472b-aec3-17fecc900811"/>
+				<expression><![CDATA[$F{jumlah}]]></expression>
+			</element>
+			<element kind="textField" uuid="c4538c33-a1db-43b8-b035-e1812ba7e05d" x="590" y="10" width="80" height="30">
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8a62d261-0f5a-4033-a8e9-305479a75086"/>
+				<expression><![CDATA[$F{totalHarga}]]></expression>
+			</element>
+			<element kind="textField" uuid="f64b1738-a437-4c1a-942b-5e4177887a73" x="700" y="10" width="100" height="30">
+				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f73e136d-0ba7-4e4e-840e-023390a3c918"/>
+				<expression><![CDATA[$F{status}]]></expression>
+			</element>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>

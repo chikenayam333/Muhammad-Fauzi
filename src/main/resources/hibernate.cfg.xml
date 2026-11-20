@@ -18,7 +18,7 @@
         <mapping class="com.tambalbanservice.muhammadfauzi.UserEntity"/>
         <mapping class="com.tambalbanservice.muhammadfauzi.StikerEntity"/>
         <mapping class="com.tambalbanservice.muhammadfauzi.OrderEntity"/>
-        <mapping class="com.tambalbanservice.muhammadfauzi.UserEntity"/>
+        
     </session-factory>
 </hibernate-configuration>
 

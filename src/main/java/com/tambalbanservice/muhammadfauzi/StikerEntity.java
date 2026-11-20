@@ -21,7 +21,7 @@ public class StikerEntity {
     private String warna;
 
     @Column(name = "ukuran")
-    private String ukuran;
+    private int ukuran;
 
     @Column(name = "harga")
     private double harga;
@@ -53,11 +53,11 @@ public class StikerEntity {
         this.warna = warna;
     }
 
-    public String getUkuran() {
+    public int getUkuran() {
         return ukuran;
     }
 
-    public void setUkuran(String ukuran) {
+    public void setUkuran(int ukuran) {
         this.ukuran = ukuran;
     }
 
